@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillGuard // Autonomous AI Pentest Agent & Defensive Gateway</title>
+  <meta name="description" content="State-of-the-art AI-driven penetration testing agent, AST manifest security gate, and continuous defensive auditing system.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Cyber Styling -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/morph-orb.css">
+  <link rel="stylesheet" href="/static/css/security-bento.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- ── Header Bar ── -->
+    <header class="header-bar">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <h1>SKILLGUARD</h1>
+          <span class="brand-subtitle">AI PENTEST AGENT & DEFENSIVE GATEWAY</span>
+        </div>
+      </div>
+
+      <div class="header-status-group">
+        <div class="status-pill status-motionsites" id="motionsitesStatusPill" title="MotionSites AI MCP Connected (motionsites.ai)">
+          <div class="motionsites-pulse"></div>
+          <span>MCP: <strong>MOTIONSITES AI</strong></span>
+        </div>
+        <div class="status-pill" id="telemetryPill" title="Live Telemetry Latency">
+          <div class="ping-dot"></div>
+          <span>LATENCY: <strong id="latencyLabel">12ms</strong></span>
+        </div>
+        <button class="status-pill cyber-audio-toggle" id="audioToggleBtn" title="Toggle Cyber Audio Synthesizer SFX" style="cursor: pointer; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.35); color: #d8b4fe; font-family: var(--font-mono);">
+          <span id="audioToggleIcon">🔊</span>
+          <span>SFX: <strong id="audioToggleLabel">ON</strong></span>
+        </button>
+        <div class="status-pill" id="ollamaStatusPill">
+          <div class="status-dot neural" id="ollamaStatusDot"></div>
+          <span>NEURAL: <strong id="modelStatusLabel">gemma:latest</strong></span>
+        </div>
+        <div class="status-pill" id="agentStatusPill">
+          <div class="status-dot active"></div>
+          <span>ENGINE: <strong>AUTONOMOUS READY</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Main Navigation Tabs ── -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="agent" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        Autonomous Agent
+      </button>
+      <button class="tab-btn" data-tab="recon" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        Passive Recon
+      </button>
+      <button class="tab-btn" data-tab="skills" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        Skill Manifest Gate
+      </button>
+      <button class="tab-btn" data-tab="reports" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        Report Vault (<span id="reportCountBadge">0</span>)
+      </button>
+    </nav>
+
+    <!-- ── Main Content Container ── -->
+    <main class="main-content">
+
+      <!-- ======================================================== -->
+      <!-- TAB 1: AUTONOMOUS AGENT (HERO INTERFACE)                 -->
+      <!-- ======================================================== -->
+      <section id="tab-agent" class="tab-view active" role="tabpanel">
+        
+        <!-- MorphOrb Interactive Autonomous Launch Hero -->
+        <div class="mo-container-wrapper">
+          <div id="morphOrbContainer"></div>
+        </div>
+
+        <!-- Quick Presets & Model Bar -->
+        <div class="presets-row" style="justify-content: center; margin-bottom: 24px; gap: 10px;">
+          <span class="presets-label">Target Presets:</span>
+          <button class="preset-chip" data-url="http://testphp.vulnweb.com">Acunetix VulnWeb (Legal Lab)</button>
+          <button class="preset-chip" data-url="http://127.0.0.1:8000">Localhost Test (Self-Host)</button>
+          <button class="preset-chip" data-url="https://juice-shop.herokuapp.com">OWASP Juice Shop</button>
+          <button class="preset-chip" data-url="https://example.com">Clean Baseline (example.com)</button>
+          
+          <div style="display: inline-flex; align-items: center; gap: 8px; margin-left: 12px;">
+            <span class="presets-label">Model:</span>
+            <select id="agentModelSelect" class="cyber-select" style="padding: 4px 10px; width: auto; font-size: 0.78rem;">
+              <option value="gemma:latest">gemma:latest (Ollama 9B)</option>
+              <option value="llama3:latest">llama3:latest</option>
+              <option value="mistral:latest">mistral:latest</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Hidden inputs for backward compatibility -->
+        <input type="hidden" id="targetUrlInput" value="http://testphp.vulnweb.com">
+        <button id="btnLaunchAgent" style="display: none;"><span id="launchBtnText">INITIATE AUTONOMOUS AGENT</span></button>
+        <button id="btnAbortAgent" class="btn-cyber-danger" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          </svg>
+          ABORT AGENT
+        </button>
+
+        <!-- 5-Phase Pipeline Visualizer -->
+        <div class="pipeline-visualizer-card">
+          <div class="pipeline-header">
+            <div class="pipeline-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              <span>Autonomous Attack Pipeline</span>
+            </div>
+            <div id="pipelineStatusMessage" class="status-pill" style="border: none; background: transparent; color: var(--cyan-glow);">
+              READY FOR MISSION
+            </div>
+          </div>
+
+          <div class="pipeline-nodes-wrapper">
+            <!-- Node 1: Recon -->
+            <div class="pipeline-node" id="node-RECON">
+              <div class="node-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="node-label">1. RECON</div>
+              <div class="node-status-badge">STANDBY</div>
+            </div>
+
+            <!-- Node 2: AI Plan -->
+            <div class="pipeline-node" id="node-PLAN">
+              <div class="node-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <div class="node-label">2. AI PLANNER</div>
+              <div class="node-status-badge">STANDBY</div>
+            </div>
+
+            <!-- Node 3: Exploitation Loop -->
+            <div class="pipeline-node" id="node-ATTACK">
+              <div class="node-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <div class="node-label">3. EXPLOITATION</div>
+              <div class="node-status-badge">STANDBY</div>
+            </div>
+
+            <!-- Node 4: Threat Correlate -->
+            <div class="pipeline-node" id="node-CORRELATE">
+              <div class="node-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
+              <div class="node-label">4. RISK SCORING</div>
+              <div class="node-status-badge">STANDBY</div>
+            </div>
+
+            <!-- Node 5: Report -->
+            <div class="pipeline-node" id="node-REPORT">
+              <div class="node-icon-ring">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="node-label">5. AI REPORT</div>
+              <div class="node-status-badge">STANDBY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two-Column Split HUD -->
+        <div class="hud-grid">
+          
+          <!-- LEFT HUD: Terminal Feed & AI Neural Thoughts -->
+          <div class="terminal-hud-card">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <div class="terminal-title">skillguard-agent-stream.sh — Live Telemetry</div>
+              <div class="terminal-actions">
+                <button id="btnAutoScroll" class="btn-cyber-outline" title="Toggle Autoscroll">Auto-Scroll: ON</button>
+                <button id="btnClearLogs" class="btn-cyber-outline" title="Clear Console">Clear</button>
+                <button id="btnCopyLogs" class="btn-cyber-outline" title="Copy Terminal Output">Copy</button>
+              </div>
+            </div>
+
+            <!-- Real-Time AI Reasoner Thought Banner -->
+            <div class="ai-thought-banner" id="aiThoughtBanner">
+              <div class="ai-avatar-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              <div class="ai-thought-content">
+                <div class="ai-thought-header">
+                  <span>AI PLANNER REASONING</span>
+                  <span id="aiPlannerIterationTag">ITERATION 0</span>
+                </div>
+                <div class="ai-thought-text" id="aiThoughtText">
+                  Awaiting agent launch. The autonomous reasoner will dynamically analyze recon fingerprints and plan targeted attack chains.
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal Live Logs Feed -->
+            <div class="terminal-body" id="terminalFeed">
+              <div class="log-entry">
+                <span class="log-time">[00:00:00]</span>
+                <span class="log-tag tag-agent">[READY]</span>
+                <span class="log-msg">SkillGuard attack orchestration agent initialized. Select target and click 'INITIATE AUTONOMOUS AGENT'.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT HUD: Threat Assessment & Security Bento Suite -->
+          <div class="threat-hud-card sec-bento" style="height: auto; min-height: 640px; padding: 0; background: transparent; border: none; box-shadow: none;">
+            <div class="sec-bento-container">
+              
+              <!-- Top Bento HUD -->
+              <div class="top-hud">
+                <h2>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="M12 8v4"></path>
+                    <path d="M12 16h.01"></path>
+                  </svg>
+                  THREAT ANALYSIS & TELEMETRY
+                  <span id="targetAnalysisLabel">Autonomous Agent Telemetry</span>
+                </h2>
+                <div class="hud-controls">
+                  <div class="seg-group" id="secBentoPeriod" role="group" aria-label="Audit Phase">
+                    <button type="button" aria-pressed="true">LIVE</button>
+                    <button type="button" aria-pressed="false">RECON</button>
+                    <button type="button" aria-pressed="false">PROBING</button>
+                    <button type="button" aria-pressed="false">FULL AUDIT</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bento 12-Column Grid -->
+              <div class="sec-bento-grid">
+                
+                <!-- BENTO 1: Threat Progression Stream Wave (span 8) -->
+                <div class="card span-8 h-stream" id="secStreamCard">
+                  <div class="g-bg" style="background: radial-gradient(circle at 10% 20%, rgba(0, 245, 255, 0.12) 0%, transparent 60%);"></div>
+                  <div class="card-inner">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="ttl">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        Threat Progression & Attack Surface
+                      </div>
+                      <div class="legend-pills">
+                        <span><i style="background:#FF2A6D;"></i>Exploits</span>
+                        <span><i style="background:#00F5FF;"></i>Fuzzing</span>
+                        <span><i style="background:#A9B2FF;"></i>Recon</span>
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-end; gap: 14px; margin-top: 10px;">
+                      <div class="big-metric" id="streamMetricVal">100%</div>
+                      <div style="padding-bottom: 4px;">
+                        <span class="delta-badge good" id="streamDeltaBadge">↑ RESILIENT POSTURE</span>
+                        <div class="muted" style="margin-top: 2px;">Real-time waveform audit depth</div>
+                      </div>
+                    </div>
+                    <svg id="secStreamSvg" style="position: absolute; left: 0; right: 0; bottom: 0; display: block;" aria-hidden="true"></svg>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 2: Threat Allocation Half-Gauge & Dynamic Score (span 4) -->
+                <div class="card span-4 h-alloc" id="secAllocCard">
+                  <div class="g-bg" style="background: radial-gradient(circle at 80% 20%, rgba(255, 42, 109, 0.1) 0%, transparent 70%);"></div>
+                  <div class="card-inner" style="align-items: center; text-align: center;">
+                    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                      <div class="ttl">Vulnerability Allocation</div>
+                      <span class="chip-badge">SEVERITY GAUGE</span>
+                    </div>
+
+                    <!-- SVG Half-Gauge Tick Marks -->
+                    <div style="position: relative; width: 240px; height: 130px; margin-top: 10px;">
+                      <svg id="secAllocSvg" width="240" height="130" viewBox="-120 -120 240 130" style="position: absolute; left: 0; top: 0;" aria-hidden="true"></svg>
+                      
+                      <!-- Preserved radial gauge circle & center elements for app.js sync -->
+                      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 8px;">
+                        <svg class="gauge-svg" viewBox="0 0 100 100" style="display: none;">
+                          <circle class="gauge-bg-circle" cx="50" cy="50" r="45"></circle>
+                          <circle class="gauge-fill-circle" id="gaugeCircle" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="big-metric" id="gaugeScoreText" style="font-size: 42px; font-weight: 300; letter-spacing: -1px; color: #fff;">100</div>
+                        <div class="gauge-grade-badge grade-A" id="gaugeGradeText" style="margin-top: 4px; font-size: 11px; padding: 2px 10px; border-radius: 8px;">GRADE A</div>
+                      </div>
+                    </div>
+
+                    <!-- Severity Counts Matrix (Preserving countHigh, countMedium, countLow, countInfo) -->
+                    <div class="severity-tiles-grid" style="width: 100%; margin-top: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                      <div class="severity-tile tile-high" style="padding: 6px 4px; text-align: center; border-radius: 10px; background: rgba(255, 42, 109, 0.08); border: 1px solid rgba(255, 42, 109, 0.2);">
+                        <div class="tile-label" style="font-size: 9px; color: var(--crit); font-weight: 700;">CRIT</div>
+                        <div class="tile-count" id="countHigh" style="font-size: 16px; font-weight: 700; color: #fff;">0</div>
+                      </div>
+                      <div class="severity-tile tile-medium" style="padding: 6px 4px; text-align: center; border-radius: 10px; background: rgba(255, 165, 2, 0.08); border: 1px solid rgba(255, 165, 2, 0.2);">
+                        <div class="tile-label" style="font-size: 9px; color: var(--med); font-weight: 700;">MED</div>
+                        <div class="tile-count" id="countMedium" style="font-size: 16px; font-weight: 700; color: #fff;">0</div>
+                      </div>
+                      <div class="severity-tile tile-low" style="padding: 6px 4px; text-align: center; border-radius: 10px; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.2);">
+                        <div class="tile-label" style="font-size: 9px; color: var(--low); font-weight: 700;">LOW</div>
+                        <div class="tile-count" id="countLow" style="font-size: 16px; font-weight: 700; color: #fff;">0</div>
+                      </div>
+                      <div class="severity-tile tile-info" style="padding: 6px 4px; text-align: center; border-radius: 10px; background: rgba(148, 163, 184, 0.08); border: 1px solid rgba(148, 163, 184, 0.2);">
+                        <div class="tile-label" style="font-size: 9px; color: var(--info); font-weight: 700;">INFO</div>
+                        <div class="tile-count" id="countInfo" style="font-size: 16px; font-weight: 700; color: #fff;">0</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 3: KPI Tile 1 - Defense Resilience (span 3, solid accent) -->
+                <div class="card solid span-3 h-kpi" id="secKpiResilience">
+                  <div class="card-inner" style="justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="cap" style="color: rgba(5,8,16,0.7); font-weight: 700;">Defense Resilience</div>
+                      <span class="chip-badge" style="background: rgba(0,0,0,0.25); color: #050810; border-color: rgba(0,0,0,0.15);">POSTURE</span>
+                    </div>
+                    <div>
+                      <div class="big-metric" id="secResilienceVal" style="color: #050810; font-size: 34px; font-weight: 700;">100%</div>
+                      <div class="delta-badge" id="secResilienceDelta" style="color: #050810; font-weight: 700;">↑ OPTIMAL DEFENSE</div>
+                    </div>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 4: KPI Tile 2 - Exploit Velocity & Runway (span 3, glass) -->
+                <div class="card glass span-3 h-kpi" id="secKpiVelocity">
+                  <div class="card-inner" style="justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="cap">Audit Velocity</div>
+                      <span class="muted mono">PROBES/SEC</span>
+                    </div>
+                    <div>
+                      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+                        <span class="big-metric" style="font-size: 30px;">42.8</span>
+                        <span class="mono" style="font-size: 13px; font-weight: 600; color: var(--acc);">BURST</span>
+                      </div>
+                      <svg id="secVelocityTicksSvg" width="100%" height="16" style="margin-top: 6px;"></svg>
+                    </div>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 5: KPI Tile 3 - Active Vectors (span 3, glass) -->
+                <div class="card glass span-3 h-kpi" id="secKpiVectors">
+                  <div class="card-inner" style="justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="cap">Vectors Engaged</div>
+                      <span class="chip-badge">5/5</span>
+                    </div>
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                      <span class="chip-badge" style="background: rgba(0, 245, 255, 0.15); color: var(--acc);">SQLi</span>
+                      <span class="chip-badge" style="background: rgba(0, 245, 255, 0.15); color: var(--acc);">XSS</span>
+                      <span class="chip-badge" style="background: rgba(0, 245, 255, 0.15); color: var(--acc);">DIRS</span>
+                      <span class="chip-badge" style="background: rgba(0, 245, 255, 0.15); color: var(--acc);">CSRF</span>
+                      <span class="chip-badge" style="background: rgba(0, 245, 255, 0.15); color: var(--acc);">BRUTE</span>
+                    </div>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 6: KPI Tile 4 - Audit Coverage (span 3, glass) -->
+                <div class="card glass span-3 h-kpi" id="secKpiCoverage">
+                  <div class="card-inner" style="justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="cap">Audit Coverage</div>
+                      <span class="muted">OWASP VECTORS</span>
+                    </div>
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="big-metric" style="font-size: 30px;">94%</span>
+                        <span class="mono muted" style="font-size: 11px;">FULL PASS</span>
+                      </div>
+                      <div style="height: 4px; border-radius: 2px; background: rgba(255,255,255,0.1); margin-top: 6px; overflow: hidden;">
+                        <div style="width: 94%; height: 100%; background: var(--acc);"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 7: Mirrored Payload Flow (span 5) -->
+                <div class="card span-5 h-flow" id="secPayloadFlowCard">
+                  <div class="g-bg" style="background: radial-gradient(circle at 10% 90%, rgba(255, 42, 109, 0.08) 0%, transparent 60%);"></div>
+                  <div class="card-inner">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                        <div class="ttl">Payload Flow Waveform</div>
+                        <div class="muted" style="margin-top: 2px;">Inbound Probes vs WAF Traps</div>
+                      </div>
+                      <div class="legend-pills" style="flex-direction: column; gap: 3px; align-items: flex-end;">
+                        <span><i style="background:#00F5FF;"></i>Probes</span>
+                        <span><i style="background:#FF2A6D;"></i>Flags</span>
+                      </div>
+                    </div>
+                    <svg id="secPayloadFlowSvg" style="position: absolute; left: 0; bottom: 8px;" aria-hidden="true"></svg>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 8: Vector Telemetry Sparkline Candles (span 7) -->
+                <div class="card span-7 h-vector" id="secVectorCandlesCard">
+                  <div class="g-bg" style="background: radial-gradient(circle at 90% 10%, rgba(0, 245, 255, 0.08) 0%, transparent 60%);"></div>
+                  <div class="card-inner">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                      <div class="ttl">Vector Telemetry & Activity Candles</div>
+                      <span class="muted mono">7-CYCLE SPARK</span>
+                    </div>
+                    <div id="secVectorCandlesList" style="display: flex; flex-direction: column; justify-content: space-between; height: calc(100% - 28px);">
+                      <!-- Injected dynamically by security-bento.js -->
+                    </div>
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+                <!-- BENTO 9: Live Vulnerabilities & Findings Feed (span 12) -->
+                <div class="card span-12 findings-bento-card" id="secFindingsStreamCard">
+                  <div class="card-inner" style="padding: 0;">
+                    
+                    <div class="findings-filter-row">
+                      <div class="ttl" style="font-size: 16px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        VULNERABILITIES & FINDINGS (<span id="totalFindingsCount">0</span>)
+                      </div>
+                      
+                      <div class="findings-filter-group">
+                        <button class="filter-btn active" data-filter="ALL">ALL</button>
+                        <button class="filter-btn" data-filter="HIGH">HIGH</button>
+                        <button class="filter-btn" data-filter="MEDIUM">MED</button>
+                        <button class="filter-btn" data-filter="LOW">LOW</button>
+                        <button class="filter-btn" data-filter="INFO">INFO</button>
+                      </div>
+                    </div>
+
+                    <!-- Scrollable Findings List -->
+                    <div class="findings-scroll-container findings-list-wrapper" id="findingsList" style="min-height: 180px; max-height: 320px;">
+                      <div style="text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 0.85rem;">
+                        No findings discovered yet. Findings stream in real-time as the agent discovers them.
+                      </div>
+                    </div>
+
+                    <!-- Report Export Actions -->
+                    <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
+                      <button id="btnQuickDownloadPdf" class="btn-cyber-primary" style="display: none; padding: 10px 18px; font-size: 0.85rem; align-items: center; gap: 6px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="18"></line><line x1="15" y1="15" x2="12" y2="18"></line></svg>
+                        DOWNLOAD PDF DOSSIER
+                      </button>
+                      <button id="btnOpenReportModal" class="btn-cyber-outline" style="display: none; padding: 10px 18px; font-size: 0.85rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        VIEW FULL EXECUTIVE REPORT
+                      </button>
+                    </div>
+
+                  </div>
+                  <div class="rim"></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2: PASSIVE RECON SCANNER                             -->
+      <!-- ======================================================== -->
+      <section id="tab-recon" class="tab-view" role="tabpanel">
+        <div class="mission-control-panel">
+          <div class="control-row">
+            <div class="url-input-container">
+              <svg class="url-prefix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="reconUrlInput" class="cyber-input" placeholder="https://target.com" value="http://testphp.vulnweb.com">
+            </div>
+            <button id="btnRunRecon" class="btn-cyber-primary">RUN PASSIVE RECON SCAN</button>
+          </div>
+        </div>
+
+        <div id="reconResultsContainer" style="display: none;">
+          <div class="hud-grid">
+            <div class="terminal-hud-card" style="height: auto; min-height: 480px; padding: 24px;">
+              <h3 style="margin-bottom: 16px; color: var(--cyan-glow);">Target Infrastructure & Fingerprints</h3>
+              <div id="reconInfraDetails" style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.8; color: #cbd5e1;"></div>
+            </div>
+
+            <div class="threat-hud-card" style="height: auto; min-height: 480px;">
+              <h3 style="margin-bottom: 16px; color: var(--purple-glow);">AI Reconnaissance Assessment</h3>
+              <div id="reconAiExplanation" style="line-height: 1.7; font-size: 0.9rem; color: #e2e8f0; overflow-y: auto;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: SKILL MANIFEST DEFENSIVE GATE (AST + REASONER)    -->
+      <!-- ======================================================== -->
+      <section id="tab-skills" class="tab-view" role="tabpanel">
+        <div class="skill-gate-grid">
+          
+          <!-- Left: Manifest Editor & Payloads -->
+          <div class="skill-editor-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="color: var(--cyan-glow);">AI Agent Skill Manifest (JSON)</h3>
+              <span style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">AST & PERMISSION GATE</span>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;">
+              <button class="preset-chip" id="presetMaliciousShell">🚨 Reverse Shell Attempt</button>
+              <button class="preset-chip" id="presetDataExfil">⚠️ Exfiltration Hazard</button>
+              <button class="preset-chip" id="presetSafeSkill">🛡️ Safe Math Helper</button>
+              <button class="preset-chip" id="presetDynamicExec">🚨 Dynamic Eval Exec</button>
+            </div>
+
+            <textarea id="skillManifestTextarea" class="json-editor-textarea" spellcheck="false"></textarea>
+
+            <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+              <button id="btnVerifySkill" class="btn-cyber-primary">
+                VERIFY MANIFEST WITH AST + AI
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Verification Verdict & Reasoning -->
+          <div class="skill-results-card">
+            <h3 style="margin-bottom: 16px; color: var(--purple-glow);">Gate Evaluation Verdict</h3>
+            
+            <div id="skillVerdictBanner" class="verdict-banner APPROVED">
+              <div>
+                <div class="verdict-title" id="verdictStatusText">READY TO VERIFY</div>
+                <div style="font-size: 0.8rem; font-family: var(--font-mono); margin-top: 4px;" id="verdictSubtitleText">Click 'Verify Manifest' to evaluate security rules.</div>
+              </div>
+              <div style="font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono);" id="verdictRiskCount">0 RISKS</div>
+            </div>
+
+            <!-- Findings breakdown -->
+            <div style="margin-bottom: 16px;">
+              <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">AST Pattern Matches:</h4>
+              <div id="skillAstMatches" style="display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto;">
+                <div style="color: var(--text-dim); font-size: 0.8rem;">No rules evaluated yet.</div>
+              </div>
+            </div>
+
+            <!-- AI Reasoner security impact explanation -->
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--purple-glow); margin-bottom: 8px;">AI Security Review:</h4>
+              <div id="skillAiExplanation" style="flex: 1; background: #05070d; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; overflow-y: auto;">
+                AI reasoner explanation will appear here after verification.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: REPORT VAULT (SAVED PENTEST ASSESSMENTS)          -->
+      <!-- ======================================================== -->
+      <section id="tab-reports" class="tab-view" role="tabpanel">
+        <div class="reports-table-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h2 style="color: var(--cyan-glow); font-size: 1.3rem;">Historical Pentest Reports</h2>
+              <p style="font-size: 0.82rem; color: var(--text-dim);">All AI-generated penetration reports persisted in reports/ vault</p>
+            </div>
+            <button id="btnRefreshReports" class="btn-cyber-outline">Refresh Vault</button>
+          </div>
+
+          <table class="reports-table">
+            <thead>
+              <tr>
+                <th>TARGET DOMAIN</th>
+                <th>FILE NAME</th>
+                <th>GENERATED DATE</th>
+                <th>SIZE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-dim); padding: 30px;">Loading reports...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── Full Executive Report Modal ── -->
+    <div class="report-modal-overlay" id="reportModal">
+      <div class="report-modal-box">
+        <div class="report-modal-header">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-glow)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <h2 id="modalReportTitle" style="font-size: 1.2rem;">Executive Security Assessment Report</h2>
+          </div>
+          <div class="modal-header-actions">
+            <button id="btnDownloadReportPdf" class="btn-cyber-primary" style="display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="18"></line><line x1="15" y1="15" x2="12" y2="18"></line></svg>
+              <span>Download PDF</span>
+            </button>
+            <button id="btnDownloadReportMd" class="btn-cyber-outline">Download (.md)</button>
+            <button id="btnCopyReportMd" class="btn-cyber-outline">Copy Markdown</button>
+            <button id="btnCloseModal" class="btn-cyber-outline">Close ✕</button>
+          </div>
+        </div>
+
+        <div class="report-modal-body markdown-rendered" id="reportModalBody">
+          <!-- Rendered report content injected by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Client-side Application Scripts -->
+  <script src="/static/js/marked.min.js"></script>
+  <script src="/static/js/html2pdf.bundle.min.js"></script>
+  <script src="/static/js/morph-orb.js"></script>
+  <script src="/static/js/security-bento.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

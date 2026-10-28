@@ -1,0 +1,386 @@
+/* ==========================================================================
+   SkillGuard // Security Bento Telemetry Suite
+   Adapted from Finance Bento architecture for AI Pentest Agent workflows
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
+
+.sec-bento {
+  font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+  width: 100%;
+  --acc: #00F5FF;
+  --acc-neon: #E8FF1F;
+  --crit: #FF2A6D;
+  --high: #FF4757;
+  --med: #FFA502;
+  --low: #00F5FF;
+  --info: #70A1FF;
+  --t1: #FFFFFF;
+  --t2: rgba(255, 255, 255, 0.65);
+  --t3: rgba(255, 255, 255, 0.42);
+  --hair: rgba(255, 255, 255, 0.12);
+  --ease: cubic-bezier(.32, .72, 0, 1);
+  --card-bg: rgba(10, 14, 23, 0.82);
+  --card-border: rgba(0, 245, 255, 0.14);
+}
+
+.sec-bento * {
+  box-sizing: border-box;
+}
+
+/* Container & Header */
+.sec-bento-container {
+  position: relative;
+  padding: 16px;
+  background: radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.05) 0%, transparent 60%),
+              radial-gradient(circle at 10% 80%, rgba(255, 42, 109, 0.04) 0%, transparent 60%),
+              #070A10;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sec-bento .top-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sec-bento .top-hud h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sec-bento .top-hud h2 span {
+  font-weight: 500;
+  color: var(--t3);
+  font-size: 13px;
+  letter-spacing: normal;
+}
+
+.sec-bento .hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sec-bento .seg-group {
+  display: flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sec-bento .seg-group button {
+  border: 0;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--t2);
+  font: 600 11.5px 'Geist', sans-serif;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.sec-bento .seg-group button[aria-pressed="true"] {
+  background: var(--acc);
+  color: #070A10;
+  box-shadow: 0 2px 10px rgba(0, 245, 255, 0.4);
+}
+
+/* Grid Layout */
+.sec-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sec-bento .card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s var(--ease);
+}
+
+.sec-bento .card:hover {
+  border-color: rgba(0, 245, 255, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(0, 245, 255, 0.15);
+}
+
+.sec-bento .card .rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  z-index: 9;
+}
+
+.sec-bento .card.solid {
+  background: linear-gradient(135deg, #00F5FF 0%, #0088cc 100%);
+  color: #050810;
+  border: none;
+  box-shadow: 0 10px 30px -8px rgba(0, 245, 255, 0.4);
+}
+
+.sec-bento .card.solid .cap {
+  color: rgba(5, 8, 16, 0.65);
+}
+
+.sec-bento .card.glass {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sec-bento .card-inner {
+  position: relative;
+  height: 100%;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+/* Card Column Spans */
+.sec-bento .span-12 { grid-column: span 12; }
+.sec-bento .span-8  { grid-column: span 8; }
+.sec-bento .span-7  { grid-column: span 7; }
+.sec-bento .span-6  { grid-column: span 6; }
+.sec-bento .span-5  { grid-column: span 5; }
+.sec-bento .span-4  { grid-column: span 4; }
+.sec-bento .span-3  { grid-column: span 3; }
+
+.sec-bento .h-stream { height: 320px; }
+.sec-bento .h-alloc  { height: 320px; }
+.sec-bento .h-kpi    { height: 140px; }
+.sec-bento .h-flow   { height: 260px; }
+.sec-bento .h-vector { height: 260px; }
+
+/* Typography & Utility */
+.sec-bento .ttl {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.sec-bento .cap {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--t2);
+}
+
+.sec-bento .big-metric {
+  font-size: 34px;
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Geist', sans-serif;
+}
+
+.sec-bento .delta-badge {
+  font: 600 11.5px 'Geist Mono', monospace;
+  color: var(--acc);
+  letter-spacing: -0.01em;
+}
+
+.sec-bento .delta-badge.crit { color: var(--crit); }
+.sec-bento .delta-badge.good { color: #00FF88; }
+
+.sec-bento .muted {
+  font-size: 12px;
+  color: var(--t3);
+  font-weight: 500;
+}
+
+.sec-bento .mono {
+  font-family: 'Geist Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.sec-bento .chip-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font: 600 10.5px 'Geist Mono', monospace;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sec-bento .legend-pills {
+  display: flex;
+  gap: 12px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--t2);
+}
+
+.sec-bento .legend-pills span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sec-bento .legend-pills i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+/* Tooltip */
+.sec-bento-tip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  background: rgba(9, 13, 22, 0.94);
+  color: #fff;
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 11.5px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 245, 255, 0.15);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+  min-width: 150px;
+}
+
+.sec-bento-tip.active {
+  opacity: 1;
+  transform: none;
+}
+
+.sec-bento-tip .tip-title {
+  color: var(--t2);
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 3px;
+}
+
+.sec-bento-tip .tip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  line-height: 18px;
+}
+
+.sec-bento-tip .tip-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--t2);
+}
+
+.sec-bento-tip .tip-row i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.sec-bento-tip .tip-row b {
+  font: 500 11.5px 'Geist Mono', monospace;
+  color: #fff;
+}
+
+/* Background Gradients */
+.sec-bento .g-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sec-bento .g-core {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 15%;
+  bottom: -5%;
+  border-radius: 90px;
+  filter: blur(55px);
+  pointer-events: none;
+}
+
+/* Findings Feed in Bento */
+.sec-bento .findings-bento-card {
+  padding: 20px;
+}
+
+.sec-bento .findings-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sec-bento .findings-list-wrapper {
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.sec-bento .findings-list-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sec-bento .findings-list-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .sec-bento .span-8, .sec-bento .span-7, .sec-bento .span-5, .sec-bento .span-4 {
+    grid-column: span 12;
+  }
+  .sec-bento .span-3 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  .sec-bento .span-3, .sec-bento .span-6 {
+    grid-column: span 12;
+  }
+  .sec-bento .top-hud {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
